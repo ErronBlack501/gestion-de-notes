@@ -1,0 +1,41 @@
+﻿@model IEnumerable<gestion_de_notes.Models.Matiere>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.NomMatiere)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Coefficient)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.NomMatiere)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Coefficient)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.IdMatiere">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.IdMatiere">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.IdMatiere">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

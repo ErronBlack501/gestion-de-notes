@@ -13,6 +13,8 @@ namespace gestion_de_notes.Models
         [Required]
         public string Prenom { get; set; } = null!;
 
+        public string NomPrenom { get; set; } = "";
+
         [StringLength(4)]
         [Required]
         public string NumMatricule { get; set; } = null!;
@@ -28,12 +30,15 @@ namespace gestion_de_notes.Models
         [Required]
         public string Email { get; set; } = null!;
 
+        [Required]
+        public string Classe { get; set; } = null!;
+
         public List<Note> Notes { get; set; } = new List<Note>();
 
 
         public Eleve()
         {
-
+       
         }
 
     }

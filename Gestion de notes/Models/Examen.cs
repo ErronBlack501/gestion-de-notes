@@ -4,6 +4,7 @@ namespace gestion_de_notes.Models
 {
     public class Examen
     {
+        [Key]
         public int IdExamen { get; set; }
 
         [Required]

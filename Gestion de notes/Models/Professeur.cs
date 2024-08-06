@@ -13,27 +13,21 @@ namespace gestion_de_notes.Models
         [Required]
         public string Prenom { get; set; } = null!;
 
+        public string NomPrenom { get; set; } = "";
+
         [Required]
-        [EmailAddress]
         public string AdresseProf { get; set; } = null!;
 
         [Phone]
         [Required]
         public string NumTel { get; set; } = null!;
 
-        [Required]
-        public string Matiere { get; set; } = null!;
-
-        [Required]
-        [Range(0, 10)]
-        public ushort Coefficient { get; set; }
-
         public List<Note> Notes { get; set; } = new List<Note>();
 
 
         public Professeur()
         {
-
+      
         }
     }
 }
