@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace gestion_de_notes.Models
 {
@@ -22,6 +23,12 @@ namespace gestion_de_notes.Models
         [Required]
         public string NumTel { get; set; } = null!;
 
+        [Required]
+        [ForeignKey("MatiereId")]
+        public int MatiereId { get; set; }
+        public Matiere Matiere { get; set; } = null!;
+
+        public List<Enseigner> enseigners { get; set; } = new List<Enseigner>();
         public List<Note> Notes { get; set; } = new List<Note>();
 
 

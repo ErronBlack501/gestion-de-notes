@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace gestion_de_notes.Models
 {
@@ -10,9 +11,8 @@ namespace gestion_de_notes.Models
         [Required]
         public string NomMatiere { get; set; } = null!;
 
-        [Required]
-        [Range(0, 10)]
-        public ushort Coefficient { get; set; }
+        public List<Professeur> Professeurs { get; set; } = new List<Professeur>();
+        public List<Posseder> Posseders { get; set; } = new List<Posseder>();
 
         public Matiere()
         {
