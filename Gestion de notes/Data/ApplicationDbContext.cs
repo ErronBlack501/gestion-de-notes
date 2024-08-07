@@ -10,10 +10,24 @@ namespace gestion_de_notes.Data
             : base(options)
         {
         }
+
+       /* protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<Eleve>()
+                .HasOne(e => e.Classe)
+                .WithMany(c => c.Eleves)
+                .HasForeignKey(e => e.ClasseId);
+            modelBuilder.Entity<Eleve>()
+               .HasOne(e => e.Groupe)
+               .WithMany(g => g.Eleves)
+               .HasForeignKey(e => e.GroupeId);
+        }*/
+
+
+        public DbSet<gestion_de_notes.Models.Groupe> Groupe { get; set; } = default!;
+        public DbSet<gestion_de_notes.Models.Classe> Classe { get; set; } = default!;
         public DbSet<gestion_de_notes.Models.Eleve> Eleve { get; set; } = default!;
-        public DbSet<gestion_de_notes.Models.Examen> Examen { get; set; } = default!;
-        public DbSet<gestion_de_notes.Models.Professeur> Professeur { get; set; } = default!;
-        public DbSet<gestion_de_notes.Models.Note> Note { get; set; } = default!;
         public DbSet<gestion_de_notes.Models.Matiere> Matiere { get; set; } = default!;
+       
     }
 }

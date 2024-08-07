@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Diagnostics.CodeAnalysis;
 
 namespace gestion_de_notes.Models
 {
@@ -31,18 +32,18 @@ namespace gestion_de_notes.Models
         [Required]
         public string Email { get; set; } = null!;
 
-        [Required]
         [ForeignKey("ClasseId")]
-        public int ClasseId { get; set; }
-        public Classe Classe { get; set; } = null!;
-
         [Required]
+        public int ClasseId { get; set; }
+        public Classe? Classe { get; set; } = null!;
+
         [ForeignKey("GroupeId")]
+        [Required]
         public int GroupeId { get; set; }
-        public Groupe Groupe { get; set; } = null!;
+        
+        public Groupe? Groupe { get; set; } 
 
         public List<Note> Notes { get; set; } = new List<Note>();
-
 
         public Eleve()
         {

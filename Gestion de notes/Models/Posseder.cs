@@ -11,14 +11,14 @@ namespace gestion_de_notes.Models
         [Required]
         [Range(0, 10)]
         public ushort Coefficient { get; set; }
-
-        [Required]
+        
         [ForeignKey("ClasseId")]
+        [Required]
         public int ClasseId { get; set; }
         public Classe Classe { get; set; } = null!;
         
-        [Required]
         [ForeignKey("MatiereId")]
+        [Required]
         public int MatiereId { get; set; }
         public Matiere Matiere { get; set; } = null!;
         

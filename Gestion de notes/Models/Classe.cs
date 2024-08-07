@@ -5,7 +5,7 @@ namespace gestion_de_notes.Models
     public class Classe
     {
         [Key]
-        public int IdClasse;
+        public int IdClasse { get; set; }
 
         [Required]
         public string Niveau { get; set; } = null!;

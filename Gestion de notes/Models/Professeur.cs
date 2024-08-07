@@ -23,8 +23,8 @@ namespace gestion_de_notes.Models
         [Required]
         public string NumTel { get; set; } = null!;
 
-        [Required]
         [ForeignKey("MatiereId")]
+        [Required]
         public int MatiereId { get; set; }
         public Matiere Matiere { get; set; } = null!;
 
