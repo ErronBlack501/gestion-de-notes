@@ -27,9 +27,9 @@ namespace gestion_de_notes.Controllers
         }
 
         // GET: Maitrisers/Details/5
-        public async Task<IActionResult> Details(int? id)
+        public async Task<IActionResult> Details(int? id, int? mid)
         {
-            if (id == null)
+            if (id == null && mid == null)
             {
                 return NotFound();
             }
@@ -37,7 +37,7 @@ namespace gestion_de_notes.Controllers
             var maitriser = await _context.Maitriser
                 .Include(m => m.Matiere)
                 .Include(m => m.Professeur)
-                .FirstOrDefaultAsync(m => m.ProfesseurId == id);
+                .FirstOrDefaultAsync(m => m.ProfesseurId == id && m.MatiereId == mid);
             if (maitriser == null)
             {
                 return NotFound();
@@ -50,7 +50,7 @@ namespace gestion_de_notes.Controllers
         public IActionResult Create()
         {
             ViewData["MatiereId"] = new SelectList(_context.Matiere, "IdMatiere", "NomMatiere");
-            ViewData["ProfesseurId"] = new SelectList(_context.Professeur, "IdProfesseur", "AdresseProf");
+            ViewData["ProfesseurId"] = new SelectList(_context.Professeur, "IdProfesseur", "NomPrenom");
             return View();
         }
 
@@ -68,25 +68,25 @@ namespace gestion_de_notes.Controllers
                 return RedirectToAction(nameof(Index));
             }
             ViewData["MatiereId"] = new SelectList(_context.Matiere, "IdMatiere", "NomMatiere", maitriser.MatiereId);
-            ViewData["ProfesseurId"] = new SelectList(_context.Professeur, "IdProfesseur", "AdresseProf", maitriser.ProfesseurId);
+            ViewData["ProfesseurId"] = new SelectList(_context.Professeur, "IdProfesseur", "NomPrenom", maitriser.ProfesseurId);
             return View(maitriser);
         }
 
-        // GET: Maitrisers/Edit/5
-        public async Task<IActionResult> Edit(int? id)
+        /*// GET: Maitrisers/Edit/5
+        public async Task<IActionResult> Edit(int? id, int? mid)
         {
-            if (id == null)
+            if (id == null && mid == null)
             {
                 return NotFound();
             }
 
-            var maitriser = await _context.Maitriser.FindAsync(id);
+            var maitriser = await _context.Maitriser.FindAsync(id, mid);
             if (maitriser == null)
             {
                 return NotFound();
             }
             ViewData["MatiereId"] = new SelectList(_context.Matiere, "IdMatiere", "NomMatiere", maitriser.MatiereId);
-            ViewData["ProfesseurId"] = new SelectList(_context.Professeur, "IdProfesseur", "AdresseProf", maitriser.ProfesseurId);
+            ViewData["ProfesseurId"] = new SelectList(_context.Professeur, "IdProfesseur", "NomPrenom", maitriser.ProfesseurId);
             return View(maitriser);
         }
 
@@ -95,9 +95,9 @@ namespace gestion_de_notes.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("ProfesseurId,MatiereId")] Maitriser maitriser)
+        public async Task<IActionResult> Edit(int id, [FromForm] int mid, [Bind("ProfesseurId,MatiereId")] Maitriser maitriser)
         {
-            if (id != maitriser.ProfesseurId)
+            if (id != maitriser.ProfesseurId || mid != maitriser.MatiereId)
             {
                 return NotFound();
             }
@@ -111,7 +111,7 @@ namespace gestion_de_notes.Controllers
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!MaitriserExists(maitriser.ProfesseurId))
+                    if (!MaitriserExists(maitriser.ProfesseurId, maitriser.MatiereId))
                     {
                         return NotFound();
                     }
@@ -123,14 +123,14 @@ namespace gestion_de_notes.Controllers
                 return RedirectToAction(nameof(Index));
             }
             ViewData["MatiereId"] = new SelectList(_context.Matiere, "IdMatiere", "NomMatiere", maitriser.MatiereId);
-            ViewData["ProfesseurId"] = new SelectList(_context.Professeur, "IdProfesseur", "AdresseProf", maitriser.ProfesseurId);
+            ViewData["ProfesseurId"] = new SelectList(_context.Professeur, "IdProfesseur", "NomPrenom", maitriser.ProfesseurId);
             return View(maitriser);
-        }
+        }*/
 
         // GET: Maitrisers/Delete/5
-        public async Task<IActionResult> Delete(int? id)
+        public async Task<IActionResult> Delete(int? id, int? mid)
         {
-            if (id == null)
+            if (id == null && mid == null)
             {
                 return NotFound();
             }
@@ -138,7 +138,7 @@ namespace gestion_de_notes.Controllers
             var maitriser = await _context.Maitriser
                 .Include(m => m.Matiere)
                 .Include(m => m.Professeur)
-                .FirstOrDefaultAsync(m => m.ProfesseurId == id);
+                .FirstOrDefaultAsync(m => m.ProfesseurId == id && m.MatiereId == mid);
             if (maitriser == null)
             {
                 return NotFound();
@@ -150,9 +150,9 @@ namespace gestion_de_notes.Controllers
         // POST: Maitrisers/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(int id)
+        public async Task<IActionResult> DeleteConfirmed(int id, [FromForm] int mid)
         {
-            var maitriser = await _context.Maitriser.FindAsync(id);
+            var maitriser = await _context.Maitriser.FindAsync(id, mid);
             if (maitriser != null)
             {
                 _context.Maitriser.Remove(maitriser);
@@ -162,9 +162,9 @@ namespace gestion_de_notes.Controllers
             return RedirectToAction(nameof(Index));
         }
 
-        private bool MaitriserExists(int id)
+        private bool MaitriserExists(int id, int mid)
         {
-            return _context.Maitriser.Any(e => e.ProfesseurId == id);
+            return _context.Maitriser.Any(e => e.ProfesseurId == id && e.MatiereId == mid);
         }
     }
 }

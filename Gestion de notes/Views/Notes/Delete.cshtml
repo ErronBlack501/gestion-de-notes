@@ -21,13 +21,13 @@
             @Html.DisplayNameFor(model => model.Eleve)
         </dt>
         <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Eleve.AdresseEleve)
+            @Html.DisplayFor(model => model.Eleve.NomPrenom)
         </dd>
         <dt class = "col-sm-2">
             @Html.DisplayNameFor(model => model.Professeur)
         </dt>
         <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Professeur.AdresseProf)
+            @Html.DisplayFor(model => model.Professeur.NomPrenom)
         </dd>
         <dt class = "col-sm-2">
             @Html.DisplayNameFor(model => model.Matiere)
@@ -44,6 +44,9 @@
     </dl>
     
     <form asp-action="Delete">
+        <input type="hidden" name="pid" value="@Model.ProfesseurId" />
+        <input type="hidden" name="mid" value="@Model.MatiereId" />
+        <input type="hidden" name="eid" value="@Model.ExamenId" />
         <input type="hidden" asp-for="EleveId" />
         <input type="hidden" asp-for="ProfesseurId" />
         <input type="hidden" asp-for="MatiereId" />

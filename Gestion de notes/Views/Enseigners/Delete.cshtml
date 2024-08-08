@@ -21,12 +21,13 @@
             @Html.DisplayNameFor(model => model.Professeur)
         </dt>
         <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Professeur.AdresseProf)
+            @Html.DisplayFor(model => model.Professeur.NomPrenom)
         </dd>
     </dl>
     
     <form asp-action="Delete">
         <input type="hidden" asp-for="ClasseId" />
+        <input type="hidden" name="pid" value="@Model.ProfesseurId" />
         <input type="hidden" asp-for="ProfesseurId" />
         <input type="submit" value="Delete" class="btn btn-danger" /> |
         <a asp-action="Index">Back to List</a>

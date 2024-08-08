@@ -72,7 +72,7 @@ namespace gestion_de_notes.Data
 
             //Note Model:
             modelBuilder.Entity<Note>()
-                .HasKey(n => new { n.ProfesseurId, n.MatiereId, n.EleveId, n.ExamenId });
+                .HasKey(n => new { n.EleveId, n.ProfesseurId, n.MatiereId, n.ExamenId });
             modelBuilder.Entity<Note>()
                 .HasOne(n => n.Professeur)
                 .WithMany(p => p.Notes)

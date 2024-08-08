@@ -18,6 +18,9 @@
                 <span asp-validation-for="NoteEleve" class="text-danger"></span>
             </div>
             <input type="hidden" asp-for="EleveId" />
+            <input type="hidden" name="pid" value="@Model.ProfesseurId" />
+            <input type="hidden" name="mid" value="@Model.MatiereId" />
+            <input type="hidden" name="eid" value="@Model.ExamenId" />
             <input type="hidden" asp-for="ProfesseurId" />
             <input type="hidden" asp-for="MatiereId" />
             <input type="hidden" asp-for="ExamenId" />

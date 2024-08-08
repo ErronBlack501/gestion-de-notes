@@ -37,10 +37,10 @@
                 @Html.DisplayFor(modelItem => item.NoteEleve)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Eleve.AdresseEleve)
+                @Html.DisplayFor(modelItem => item.Eleve.NomPrenom)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Professeur.AdresseProf)
+                @Html.DisplayFor(modelItem => item.Professeur.NomPrenom)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Matiere.NomMatiere)
@@ -49,9 +49,9 @@
                 @Html.DisplayFor(modelItem => item.Examen.Session)
             </td>
             <td>
-                @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
-                @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
-                @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
+                @Html.ActionLink("Edit", "Edit", new { id = item.EleveId, pid = item.ProfesseurId, mid = item.MatiereId, eid = item.ExamenId }) |
+                @Html.ActionLink("Details", "Details", new { id = item.EleveId, pid = item.ProfesseurId, mid = item.MatiereId, eid = item.ExamenId }) |
+                @Html.ActionLink("Delete", "Delete", new { id = item.EleveId, pid = item.ProfesseurId, mid = item.MatiereId, eid = item.ExamenId })
             </td>
         </tr>
 }

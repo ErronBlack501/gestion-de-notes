@@ -27,9 +27,9 @@ namespace gestion_de_notes.Controllers
         }
 
         // GET: Enseigners/Details/5
-        public async Task<IActionResult> Details(int? id)
+        public async Task<IActionResult> Details(int? id, int? pid)
         {
-            if (id == null)
+            if (id == null && pid == null)
             {
                 return NotFound();
             }
@@ -37,7 +37,7 @@ namespace gestion_de_notes.Controllers
             var enseigner = await _context.Enseigner
                 .Include(e => e.Classe)
                 .Include(e => e.Professeur)
-                .FirstOrDefaultAsync(m => m.ClasseId == id);
+                .FirstOrDefaultAsync(m => m.ClasseId == id && m.ProfesseurId == pid);
             if (enseigner == null)
             {
                 return NotFound();
@@ -50,7 +50,7 @@ namespace gestion_de_notes.Controllers
         public IActionResult Create()
         {
             ViewData["ClasseId"] = new SelectList(_context.Classe, "IdClasse", "Niveau");
-            ViewData["ProfesseurId"] = new SelectList(_context.Professeur, "IdProfesseur", "AdresseProf");
+            ViewData["ProfesseurId"] = new SelectList(_context.Professeur, "IdProfesseur", "NomPrenom");
             return View();
         }
 
@@ -68,25 +68,25 @@ namespace gestion_de_notes.Controllers
                 return RedirectToAction(nameof(Index));
             }
             ViewData["ClasseId"] = new SelectList(_context.Classe, "IdClasse", "Niveau", enseigner.ClasseId);
-            ViewData["ProfesseurId"] = new SelectList(_context.Professeur, "IdProfesseur", "AdresseProf", enseigner.ProfesseurId);
+            ViewData["ProfesseurId"] = new SelectList(_context.Professeur, "IdProfesseur", "NomPrenom", enseigner.ProfesseurId);
             return View(enseigner);
         }
 
-        // GET: Enseigners/Edit/5
-        public async Task<IActionResult> Edit(int? id)
+        /*// GET: Enseigners/Edit/5
+        public async Task<IActionResult> Edit(int? id, int? pid)
         {
-            if (id == null)
+            if (id == null && pid == null)
             {
                 return NotFound();
             }
 
-            var enseigner = await _context.Enseigner.FindAsync(id);
+            var enseigner = await _context.Enseigner.FindAsync(id, pid);
             if (enseigner == null)
             {
                 return NotFound();
             }
             ViewData["ClasseId"] = new SelectList(_context.Classe, "IdClasse", "Niveau", enseigner.ClasseId);
-            ViewData["ProfesseurId"] = new SelectList(_context.Professeur, "IdProfesseur", "AdresseProf", enseigner.ProfesseurId);
+            ViewData["ProfesseurId"] = new SelectList(_context.Professeur, "IdProfesseur", "NomPrenom", enseigner.ProfesseurId);
             return View(enseigner);
         }
 
@@ -95,9 +95,9 @@ namespace gestion_de_notes.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("ClasseId,ProfesseurId")] Enseigner enseigner)
+        public async Task<IActionResult> Edit(int id, [FromForm]int pid, [Bind("ClasseId,ProfesseurId")] Enseigner enseigner)
         {
-            if (id != enseigner.ClasseId)
+            if (id != enseigner.ClasseId || pid != enseigner.ProfesseurId)
             {
                 return NotFound();
             }
@@ -111,7 +111,7 @@ namespace gestion_de_notes.Controllers
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!EnseignerExists(enseigner.ClasseId))
+                    if (!EnseignerExists(enseigner.ClasseId, enseigner.ProfesseurId))
                     {
                         return NotFound();
                     }
@@ -123,14 +123,14 @@ namespace gestion_de_notes.Controllers
                 return RedirectToAction(nameof(Index));
             }
             ViewData["ClasseId"] = new SelectList(_context.Classe, "IdClasse", "Niveau", enseigner.ClasseId);
-            ViewData["ProfesseurId"] = new SelectList(_context.Professeur, "IdProfesseur", "AdresseProf", enseigner.ProfesseurId);
+            ViewData["ProfesseurId"] = new SelectList(_context.Professeur, "IdProfesseur", "NomPrenom", enseigner.ProfesseurId);
             return View(enseigner);
-        }
+        }*/
 
         // GET: Enseigners/Delete/5
-        public async Task<IActionResult> Delete(int? id)
+        public async Task<IActionResult> Delete(int? id, int? pid)
         {
-            if (id == null)
+            if (id == null && pid == null)
             {
                 return NotFound();
             }
@@ -138,7 +138,7 @@ namespace gestion_de_notes.Controllers
             var enseigner = await _context.Enseigner
                 .Include(e => e.Classe)
                 .Include(e => e.Professeur)
-                .FirstOrDefaultAsync(m => m.ClasseId == id);
+                .FirstOrDefaultAsync(m => m.ClasseId == id && m.ProfesseurId == pid);
             if (enseigner == null)
             {
                 return NotFound();
@@ -150,9 +150,9 @@ namespace gestion_de_notes.Controllers
         // POST: Enseigners/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(int id)
+        public async Task<IActionResult> DeleteConfirmed(int id, [FromForm]int pid)
         {
-            var enseigner = await _context.Enseigner.FindAsync(id);
+            var enseigner = await _context.Enseigner.FindAsync(id, pid);
             if (enseigner != null)
             {
                 _context.Enseigner.Remove(enseigner);
@@ -162,9 +162,9 @@ namespace gestion_de_notes.Controllers
             return RedirectToAction(nameof(Index));
         }
 
-        private bool EnseignerExists(int id)
+        private bool EnseignerExists(int id, int pid)
         {
-            return _context.Enseigner.Any(e => e.ClasseId == id);
+            return _context.Enseigner.Any(e => e.ClasseId == id && e.ProfesseurId == pid);
         }
     }
 }

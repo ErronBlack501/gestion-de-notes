@@ -27,9 +27,9 @@ namespace gestion_de_notes.Controllers
         }
 
         // GET: Notes/Details/5
-        public async Task<IActionResult> Details(int? id)
+        public async Task<IActionResult> Details(int? id, int? pid, int? mid, int? eid)
         {
-            if (id == null)
+            if (id == null && pid == null && mid == null && eid == null)
             {
                 return NotFound();
             }
@@ -39,7 +39,7 @@ namespace gestion_de_notes.Controllers
                 .Include(n => n.Examen)
                 .Include(n => n.Matiere)
                 .Include(n => n.Professeur)
-                .FirstOrDefaultAsync(m => m.ProfesseurId == id);
+                .FirstOrDefaultAsync(m => m.EleveId == id && m.ProfesseurId == pid && m.MatiereId == mid && m.ExamenId == eid);
             if (note == null)
             {
                 return NotFound();
@@ -51,10 +51,10 @@ namespace gestion_de_notes.Controllers
         // GET: Notes/Create
         public IActionResult Create()
         {
-            ViewData["EleveId"] = new SelectList(_context.Eleve, "IdEleve", "AdresseEleve");
+            ViewData["EleveId"] = new SelectList(_context.Eleve, "IdEleve", "NomPrenom");
             ViewData["ExamenId"] = new SelectList(_context.Examen, "IdExamen", "Session");
             ViewData["MatiereId"] = new SelectList(_context.Matiere, "IdMatiere", "NomMatiere");
-            ViewData["ProfesseurId"] = new SelectList(_context.Professeur, "IdProfesseur", "AdresseProf");
+            ViewData["ProfesseurId"] = new SelectList(_context.Professeur, "IdProfesseur", "NomPrenom");
             return View();
         }
 
@@ -71,30 +71,30 @@ namespace gestion_de_notes.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["EleveId"] = new SelectList(_context.Eleve, "IdEleve", "AdresseEleve", note.EleveId);
+            ViewData["EleveId"] = new SelectList(_context.Eleve, "IdEleve", "NomPrenom", note.EleveId);
             ViewData["ExamenId"] = new SelectList(_context.Examen, "IdExamen", "Session", note.ExamenId);
             ViewData["MatiereId"] = new SelectList(_context.Matiere, "IdMatiere", "NomMatiere", note.MatiereId);
-            ViewData["ProfesseurId"] = new SelectList(_context.Professeur, "IdProfesseur", "AdresseProf", note.ProfesseurId);
+            ViewData["ProfesseurId"] = new SelectList(_context.Professeur, "IdProfesseur", "NomPrenom", note.ProfesseurId);
             return View(note);
         }
 
         // GET: Notes/Edit/5
-        public async Task<IActionResult> Edit(int? id)
+        public async Task<IActionResult> Edit(int? id, int? pid, int? mid, int? eid)
         {
-            if (id == null)
+            if (id == null && pid == null && mid == null && eid == null)
             {
                 return NotFound();
             }
 
-            var note = await _context.Note.FindAsync(id);
+            var note = await _context.Note.FindAsync(id, pid, mid, eid );
             if (note == null)
             {
                 return NotFound();
             }
-            ViewData["EleveId"] = new SelectList(_context.Eleve, "IdEleve", "AdresseEleve", note.EleveId);
+            ViewData["EleveId"] = new SelectList(_context.Eleve, "IdEleve", "NomPrenom", note.EleveId);
             ViewData["ExamenId"] = new SelectList(_context.Examen, "IdExamen", "Session", note.ExamenId);
             ViewData["MatiereId"] = new SelectList(_context.Matiere, "IdMatiere", "NomMatiere", note.MatiereId);
-            ViewData["ProfesseurId"] = new SelectList(_context.Professeur, "IdProfesseur", "AdresseProf", note.ProfesseurId);
+            ViewData["ProfesseurId"] = new SelectList(_context.Professeur, "IdProfesseur", "NomPrenom", note.ProfesseurId);
             return View(note);
         }
 
@@ -103,9 +103,9 @@ namespace gestion_de_notes.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("NoteEleve,EleveId,ProfesseurId,MatiereId,ExamenId")] Note note)
+        public async Task<IActionResult> Edit(int id, [FromForm]int pid, [FromForm]int mid, [FromForm]int eid, [Bind("NoteEleve,EleveId,ProfesseurId,MatiereId,ExamenId")] Note note)
         {
-            if (id != note.ProfesseurId)
+            if (id != note.EleveId || pid != note.ProfesseurId || mid != note.MatiereId || eid != note.ExamenId)
             {
                 return NotFound();
             }
@@ -119,7 +119,7 @@ namespace gestion_de_notes.Controllers
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!NoteExists(note.ProfesseurId))
+                    if (!NoteExists(note.EleveId, note.ProfesseurId, note.MatiereId, note.ExamenId))
                     {
                         return NotFound();
                     }
@@ -130,17 +130,17 @@ namespace gestion_de_notes.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["EleveId"] = new SelectList(_context.Eleve, "IdEleve", "AdresseEleve", note.EleveId);
+            ViewData["EleveId"] = new SelectList(_context.Eleve, "IdEleve", "NomPrenom", note.EleveId);
             ViewData["ExamenId"] = new SelectList(_context.Examen, "IdExamen", "Session", note.ExamenId);
             ViewData["MatiereId"] = new SelectList(_context.Matiere, "IdMatiere", "NomMatiere", note.MatiereId);
-            ViewData["ProfesseurId"] = new SelectList(_context.Professeur, "IdProfesseur", "AdresseProf", note.ProfesseurId);
+            ViewData["ProfesseurId"] = new SelectList(_context.Professeur, "IdProfesseur", "NomPrenom", note.ProfesseurId);
             return View(note);
         }
 
         // GET: Notes/Delete/5
-        public async Task<IActionResult> Delete(int? id)
+        public async Task<IActionResult> Delete(int? id, int? pid, int? mid, int? eid)
         {
-            if (id == null)
+            if (id == null && pid == null && mid == null && eid == null)
             {
                 return NotFound();
             }
@@ -150,7 +150,7 @@ namespace gestion_de_notes.Controllers
                 .Include(n => n.Examen)
                 .Include(n => n.Matiere)
                 .Include(n => n.Professeur)
-                .FirstOrDefaultAsync(m => m.ProfesseurId == id);
+                .FirstOrDefaultAsync(m => m.EleveId == id && m.ProfesseurId == pid && m.MatiereId == mid && m.ExamenId == eid);
             if (note == null)
             {
                 return NotFound();
@@ -162,9 +162,9 @@ namespace gestion_de_notes.Controllers
         // POST: Notes/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(int id)
+        public async Task<IActionResult> DeleteConfirmed(int id, [FromForm] int pid, [FromForm] int mid, [FromForm] int eid)
         {
-            var note = await _context.Note.FindAsync(id);
+            var note = await _context.Note.FindAsync(id, pid, mid, eid);
             if (note != null)
             {
                 _context.Note.Remove(note);
@@ -174,9 +174,9 @@ namespace gestion_de_notes.Controllers
             return RedirectToAction(nameof(Index));
         }
 
-        private bool NoteExists(int id)
+        private bool NoteExists(int id, int pid, int mid, int eid)
         {
-            return _context.Note.Any(e => e.ProfesseurId == id);
+            return _context.Note.Any(e => e.EleveId == id && e.ProfesseurId == pid && e.MatiereId == mid && e.ExamenId == eid);
         }
     }
 }
