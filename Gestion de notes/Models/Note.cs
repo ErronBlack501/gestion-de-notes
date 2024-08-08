@@ -6,9 +6,6 @@ namespace gestion_de_notes.Models
 {
     public class Note
     {
-        [Key]
-        public int IdNote { get; set; }
-
         [Required]
         [Range(0, 20.0)]
         [Precision(3)]
@@ -28,6 +25,11 @@ namespace gestion_de_notes.Models
         [ForeignKey("ExamenId")]
         public int ExamenId { get; set; }
         public Examen Examen { get; set; } = null!;
+
+        [Required]
+        [ForeignKey("MatiereId")]
+        public int MatiereId { get; set; }
+        public Matiere Matiere { get; set; } = null!;
 
         public Note()
         {

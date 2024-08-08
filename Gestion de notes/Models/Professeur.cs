@@ -14,21 +14,21 @@ namespace gestion_de_notes.Models
         [Required]
         public string Prenom { get; set; } = null!;
 
-        public string NomPrenom { get; set; } = "";
+        public string NomPrenom { get; set; } = string.Empty; //Unique
 
         [Required]
         public string AdresseProf { get; set; } = null!;
 
         [Phone]
         [Required]
-        public string NumTel { get; set; } = null!;
+        public string NumTel { get; set; } = null!; //Unique
 
         [ForeignKey("MatiereId")]
         [Required]
         public int MatiereId { get; set; }
-        public Matiere Matiere { get; set; } = null!;
+        public Matiere? Matiere { get; set; } 
 
-        public List<Enseigner> enseigners { get; set; } = new List<Enseigner>();
+        public List<Enseigner> Enseigners { get; set; } = new List<Enseigner>();
         public List<Note> Notes { get; set; } = new List<Note>();
 
 

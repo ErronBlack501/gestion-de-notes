@@ -5,22 +5,19 @@ namespace gestion_de_notes.Models
 {
     public class Posseder
     {
-        [Key]
-        public int PossederId { get; set; }
-
         [Required]
-        [Range(0, 10)]
+        [Range(1, 10)]
         public ushort Coefficient { get; set; }
         
         [ForeignKey("ClasseId")]
         [Required]
         public int ClasseId { get; set; }
-        public Classe Classe { get; set; } = null!;
+        public Classe? Classe { get; set; }
         
         [ForeignKey("MatiereId")]
         [Required]
         public int MatiereId { get; set; }
-        public Matiere Matiere { get; set; } = null!;
+        public Matiere? Matiere { get; set; } 
         
         public Posseder()
         {

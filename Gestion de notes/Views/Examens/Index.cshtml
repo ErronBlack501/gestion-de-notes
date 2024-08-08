@@ -1,0 +1,47 @@
+﻿@model IEnumerable<gestion_de_notes.Models.Examen>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Session)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DebutSession)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FinSesssion)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Session)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DebutSession)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.FinSesssion)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.IdExamen">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.IdExamen">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.IdExamen">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

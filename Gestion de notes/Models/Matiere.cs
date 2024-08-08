@@ -9,10 +9,11 @@ namespace gestion_de_notes.Models
         public int IdMatiere { get; set; }
 
         [Required]
-        public string NomMatiere { get; set; } = null!;
+        public string NomMatiere { get; set; } = null!; //unique
 
         public List<Professeur> Professeurs { get; set; } = new List<Professeur>();
         public List<Posseder> Posseders { get; set; } = new List<Posseder>();
+        public List<Note> Notes { get; set; } = new List<Note>();
 
         public Matiere()
         {

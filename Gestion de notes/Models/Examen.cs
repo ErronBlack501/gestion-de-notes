@@ -8,7 +8,7 @@ namespace gestion_de_notes.Models
         public int IdExamen { get; set; }
 
         [Required]
-        public string Session { get; set; } = null!;
+        public string Session { get; set; } = null!; //Unique
 
         [DataType(DataType.Date)]
         [Required]
@@ -22,6 +22,7 @@ namespace gestion_de_notes.Models
 
         public Examen()
         {
+
         }
     }
 }

@@ -5,8 +5,6 @@ namespace gestion_de_notes.Models
 {
     public class Enseigner
     {
-        [Key]
-        public int IdEnseigner { get; set; }
         [Required]
         [ForeignKey("ClasseId")]
         public int ClasseId { get; set; }

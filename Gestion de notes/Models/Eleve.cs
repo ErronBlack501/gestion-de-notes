@@ -15,11 +15,11 @@ namespace gestion_de_notes.Models
         [Required]
         public string Prenom { get; set; } = null!;
 
-        public string NomPrenom { get; set; } = "";
+        public string NomPrenom { get; set; } = ""; //unique
 
         [StringLength(4)]
         [Required]
-        public string NumMatricule { get; set; } = null!;
+        public string NumMatricule { get; set; } = null!; //unique
 
         [Required]
         public string AdresseEleve { get; set; } = null!;
@@ -30,7 +30,7 @@ namespace gestion_de_notes.Models
 
         [EmailAddress]
         [Required]
-        public string Email { get; set; } = null!;
+        public string Email { get; set; } = null!; //unique
 
         [ForeignKey("ClasseId")]
         [Required]
