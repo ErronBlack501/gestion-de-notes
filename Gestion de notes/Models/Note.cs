@@ -5,7 +5,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 namespace gestion_de_notes.Models
 {
     public class Note
-    {
+    {  
         [Required]
         [Precision(3)]
         [Range(0, 20.00)]

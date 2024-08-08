@@ -8,7 +8,7 @@ namespace gestion_de_notes.Models
         [Required]
         [ForeignKey("ProfesseurId")]
         public int ProfesseurId { get; set; }
-        public Professeur? Professeur { get; set; } = null!;
+        public Professeur? Professeur { get; set; } 
 
         [Required]
         [ForeignKey("MatiereId")]

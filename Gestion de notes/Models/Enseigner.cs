@@ -17,6 +17,7 @@ namespace gestion_de_notes.Models
 
         public Enseigner() 
         {
+
         }
     }
 }

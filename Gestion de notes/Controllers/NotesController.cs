@@ -51,10 +51,10 @@ namespace gestion_de_notes.Controllers
         // GET: Notes/Create
         public IActionResult Create()
         {
-            ViewData["EleveId"] = new SelectList(_context.Eleve, "IdEleve", "NomPrenom");
+            ViewData["EleveId"] = new SelectList(_context.Eleve, "IdEleve", "AdresseEleve");
             ViewData["ExamenId"] = new SelectList(_context.Examen, "IdExamen", "Session");
             ViewData["MatiereId"] = new SelectList(_context.Matiere, "IdMatiere", "NomMatiere");
-            ViewData["ProfesseurId"] = new SelectList(_context.Professeur, "IdProfesseur", "NomPrenom");
+            ViewData["ProfesseurId"] = new SelectList(_context.Professeur, "IdProfesseur", "AdresseProf");
             return View();
         }
 
@@ -71,10 +71,10 @@ namespace gestion_de_notes.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["EleveId"] = new SelectList(_context.Eleve, "IdEleve", "NomPrenom", note.EleveId);
+            ViewData["EleveId"] = new SelectList(_context.Eleve, "IdEleve", "AdresseEleve", note.EleveId);
             ViewData["ExamenId"] = new SelectList(_context.Examen, "IdExamen", "Session", note.ExamenId);
             ViewData["MatiereId"] = new SelectList(_context.Matiere, "IdMatiere", "NomMatiere", note.MatiereId);
-            ViewData["ProfesseurId"] = new SelectList(_context.Professeur, "IdProfesseur", "NomPrenom", note.ProfesseurId);
+            ViewData["ProfesseurId"] = new SelectList(_context.Professeur, "IdProfesseur", "AdresseProf", note.ProfesseurId);
             return View(note);
         }
 
@@ -91,10 +91,10 @@ namespace gestion_de_notes.Controllers
             {
                 return NotFound();
             }
-            ViewData["EleveId"] = new SelectList(_context.Eleve, "IdEleve", "NomPrenom", note.EleveId);
+            ViewData["EleveId"] = new SelectList(_context.Eleve, "IdEleve", "AdresseEleve", note.EleveId);
             ViewData["ExamenId"] = new SelectList(_context.Examen, "IdExamen", "Session", note.ExamenId);
             ViewData["MatiereId"] = new SelectList(_context.Matiere, "IdMatiere", "NomMatiere", note.MatiereId);
-            ViewData["ProfesseurId"] = new SelectList(_context.Professeur, "IdProfesseur", "NomPrenom", note.ProfesseurId);
+            ViewData["ProfesseurId"] = new SelectList(_context.Professeur, "IdProfesseur", "AdresseProf", note.ProfesseurId);
             return View(note);
         }
 
@@ -130,10 +130,10 @@ namespace gestion_de_notes.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["EleveId"] = new SelectList(_context.Eleve, "IdEleve", "NomPrenom", note.EleveId);
+            ViewData["EleveId"] = new SelectList(_context.Eleve, "IdEleve", "AdresseEleve", note.EleveId);
             ViewData["ExamenId"] = new SelectList(_context.Examen, "IdExamen", "Session", note.ExamenId);
             ViewData["MatiereId"] = new SelectList(_context.Matiere, "IdMatiere", "NomMatiere", note.MatiereId);
-            ViewData["ProfesseurId"] = new SelectList(_context.Professeur, "IdProfesseur", "NomPrenom", note.ProfesseurId);
+            ViewData["ProfesseurId"] = new SelectList(_context.Professeur, "IdProfesseur", "AdresseProf", note.ProfesseurId);
             return View(note);
         }
 

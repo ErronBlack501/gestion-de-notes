@@ -9,11 +9,11 @@ using gestion_de_notes.Data;
 
 #nullable disable
 
-namespace gestion_de_notes.Data.Migrations
+namespace gestion_de_notes.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20240808090617_NoteMaitriseCreate")]
-    partial class NoteMaitriseCreate
+    [Migration("20240808113716_CreateIdentitySchema")]
+    partial class CreateIdentitySchema
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -310,6 +310,9 @@ namespace gestion_de_notes.Data.Migrations
                     b.Property<int>("ProfesseurId")
                         .HasColumnType("int");
 
+                    b.Property<int>("IdEnseigner")
+                        .HasColumnType("int");
+
                     b.HasKey("ClasseId", "ProfesseurId");
 
                     b.HasIndex("ProfesseurId");
@@ -369,6 +372,9 @@ namespace gestion_de_notes.Data.Migrations
                     b.Property<int>("MatiereId")
                         .HasColumnType("int");
 
+                    b.Property<int>("IdMaitriser")
+                        .HasColumnType("int");
+
                     b.HasKey("ProfesseurId", "MatiereId");
 
                     b.HasIndex("MatiereId");
@@ -410,6 +416,9 @@ namespace gestion_de_notes.Data.Migrations
                     b.Property<int>("ExamenId")
                         .HasColumnType("int");
 
+                    b.Property<int>("IdNote")
+                        .HasColumnType("int");
+
                     b.Property<double>("NoteEleve")
                         .HasPrecision(3)
                         .HasColumnType("float(3)");
@@ -434,6 +443,9 @@ namespace gestion_de_notes.Data.Migrations
                         .HasColumnType("int");
 
                     b.Property<int>("Coefficient")
+                        .HasColumnType("int");
+
+                    b.Property<int>("IdPosseder")
                         .HasColumnType("int");
 
                     b.HasKey("ClasseId", "MatiereId");

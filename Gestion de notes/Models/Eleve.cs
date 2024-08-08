@@ -15,7 +15,7 @@ namespace gestion_de_notes.Models
         [Required]
         public string Prenom { get; set; } = null!;
 
-        public string NomPrenom { get; set; } = ""; //unique
+        public string NomPrenom { get; set; } = string.Empty; //unique
 
         [StringLength(4)]
         [Required]
@@ -35,7 +35,7 @@ namespace gestion_de_notes.Models
         [ForeignKey("ClasseId")]
         [Required]
         public int ClasseId { get; set; }
-        public Classe? Classe { get; set; } = null!;
+        public Classe? Classe { get; set; } 
 
         [ForeignKey("GroupeId")]
         [Required]

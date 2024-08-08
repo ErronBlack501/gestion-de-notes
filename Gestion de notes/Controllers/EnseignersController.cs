@@ -50,7 +50,7 @@ namespace gestion_de_notes.Controllers
         public IActionResult Create()
         {
             ViewData["ClasseId"] = new SelectList(_context.Classe, "IdClasse", "Niveau");
-            ViewData["ProfesseurId"] = new SelectList(_context.Professeur, "IdProfesseur", "NomPrenom");
+            ViewData["ProfesseurId"] = new SelectList(_context.Professeur, "IdProfesseur", "AdresseProf");
             return View();
         }
 
@@ -68,7 +68,7 @@ namespace gestion_de_notes.Controllers
                 return RedirectToAction(nameof(Index));
             }
             ViewData["ClasseId"] = new SelectList(_context.Classe, "IdClasse", "Niveau", enseigner.ClasseId);
-            ViewData["ProfesseurId"] = new SelectList(_context.Professeur, "IdProfesseur", "NomPrenom", enseigner.ProfesseurId);
+            ViewData["ProfesseurId"] = new SelectList(_context.Professeur, "IdProfesseur", "AdresseProf", enseigner.ProfesseurId);
             return View(enseigner);
         }
 
@@ -86,7 +86,7 @@ namespace gestion_de_notes.Controllers
                 return NotFound();
             }
             ViewData["ClasseId"] = new SelectList(_context.Classe, "IdClasse", "Niveau", enseigner.ClasseId);
-            ViewData["ProfesseurId"] = new SelectList(_context.Professeur, "IdProfesseur", "NomPrenom", enseigner.ProfesseurId);
+            ViewData["ProfesseurId"] = new SelectList(_context.Professeur, "IdProfesseur", "AdresseProf", enseigner.ProfesseurId);
             return View(enseigner);
         }
 
@@ -123,7 +123,7 @@ namespace gestion_de_notes.Controllers
                 return RedirectToAction(nameof(Index));
             }
             ViewData["ClasseId"] = new SelectList(_context.Classe, "IdClasse", "Niveau", enseigner.ClasseId);
-            ViewData["ProfesseurId"] = new SelectList(_context.Professeur, "IdProfesseur", "NomPrenom", enseigner.ProfesseurId);
+            ViewData["ProfesseurId"] = new SelectList(_context.Professeur, "IdProfesseur", "AdresseProf", enseigner.ProfesseurId);
             return View(enseigner);
         }
 

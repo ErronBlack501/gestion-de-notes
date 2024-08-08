@@ -116,6 +116,7 @@ namespace gestion_de_notes.Controllers
             {
                 try
                 {
+                    eleve.NomPrenom = $"{eleve.Nom} {eleve.Prenom}";
                     _context.Update(eleve);
                     await _context.SaveChangesAsync();
                 }

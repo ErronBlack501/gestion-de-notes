@@ -50,7 +50,7 @@ namespace gestion_de_notes.Controllers
         public IActionResult Create()
         {
             ViewData["MatiereId"] = new SelectList(_context.Matiere, "IdMatiere", "NomMatiere");
-            ViewData["ProfesseurId"] = new SelectList(_context.Professeur, "IdProfesseur", "NomPrenom");
+            ViewData["ProfesseurId"] = new SelectList(_context.Professeur, "IdProfesseur", "AdresseProf");
             return View();
         }
 
@@ -68,7 +68,7 @@ namespace gestion_de_notes.Controllers
                 return RedirectToAction(nameof(Index));
             }
             ViewData["MatiereId"] = new SelectList(_context.Matiere, "IdMatiere", "NomMatiere", maitriser.MatiereId);
-            ViewData["ProfesseurId"] = new SelectList(_context.Professeur, "IdProfesseur", "NomPrenom", maitriser.ProfesseurId);
+            ViewData["ProfesseurId"] = new SelectList(_context.Professeur, "IdProfesseur", "AdresseProf", maitriser.ProfesseurId);
             return View(maitriser);
         }
 
@@ -86,7 +86,7 @@ namespace gestion_de_notes.Controllers
                 return NotFound();
             }
             ViewData["MatiereId"] = new SelectList(_context.Matiere, "IdMatiere", "NomMatiere", maitriser.MatiereId);
-            ViewData["ProfesseurId"] = new SelectList(_context.Professeur, "IdProfesseur", "NomPrenom", maitriser.ProfesseurId);
+            ViewData["ProfesseurId"] = new SelectList(_context.Professeur, "IdProfesseur", "AdresseProf", maitriser.ProfesseurId);
             return View(maitriser);
         }
 
@@ -123,7 +123,7 @@ namespace gestion_de_notes.Controllers
                 return RedirectToAction(nameof(Index));
             }
             ViewData["MatiereId"] = new SelectList(_context.Matiere, "IdMatiere", "NomMatiere", maitriser.MatiereId);
-            ViewData["ProfesseurId"] = new SelectList(_context.Professeur, "IdProfesseur", "NomPrenom", maitriser.ProfesseurId);
+            ViewData["ProfesseurId"] = new SelectList(_context.Professeur, "IdProfesseur", "AdresseProf", maitriser.ProfesseurId);
             return View(maitriser);
         }
 

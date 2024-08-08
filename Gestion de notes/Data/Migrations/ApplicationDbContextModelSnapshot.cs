@@ -8,7 +8,7 @@ using gestion_de_notes.Data;
 
 #nullable disable
 
-namespace gestion_de_notes.Data.Migrations
+namespace gestion_de_notes.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
     partial class ApplicationDbContextModelSnapshot : ModelSnapshot
