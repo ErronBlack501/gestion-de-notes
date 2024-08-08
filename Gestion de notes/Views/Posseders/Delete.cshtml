@@ -33,6 +33,7 @@
     
     <form asp-action="Delete">
         <input type="hidden" asp-for="ClasseId" />
+        <input type="hidden" name="mid" value="@Model.MatiereId" />
         <input type="hidden" asp-for="MatiereId" />
         <input type="submit" value="Delete" class="btn btn-danger" /> |
         <a asp-action="Index">Back to List</a>

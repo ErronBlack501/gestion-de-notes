@@ -38,20 +38,7 @@ app.UseAuthorization();
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");
-/*
-//Posseders Controller:-----------------------------------------------
-app.MapControllerRoute(
-    name: "editP",
-    pattern: "{controller=Posseders}/{action=Edit}/{Cid?}/{Mid?}");
 
-app.MapControllerRoute(
-    name: "details",
-    pattern: "{controller=Posseders}/{action=Details}/{Cid?}/{Mid?}");
-
-app.MapControllerRoute(
-    name: "delete",
-    pattern: "{controller=Posseders}/{action=Delete}/{Cid?}/{Mid?}");
-//---------------------------------------------------------------------*/
 app.MapRazorPages();
 
 app.Run();

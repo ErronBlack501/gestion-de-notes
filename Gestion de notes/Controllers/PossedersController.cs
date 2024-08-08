@@ -27,9 +27,9 @@ namespace gestion_de_notes.Controllers
         }
 
         // GET: Posseders/Details/5
-        public async Task<IActionResult> Details(int? id)
+        public async Task<IActionResult> Details(int? id, int? mid)
         {
-            if (id == null)
+            if (id == null && mid == null)
             {
                 return NotFound();
             }
@@ -37,7 +37,7 @@ namespace gestion_de_notes.Controllers
             var posseder = await _context.Posseder
                 .Include(p => p.Classe)
                 .Include(p => p.Matiere)
-                .FirstOrDefaultAsync(m => m.ClasseId == id);
+                .FirstOrDefaultAsync(m => m.ClasseId == id && m.MatiereId == mid);
             if (posseder == null)
             {
                 return NotFound();
@@ -73,14 +73,14 @@ namespace gestion_de_notes.Controllers
         }
 
         // GET: Posseders/Edit/5
-        public async Task<IActionResult> Edit(int? id)
+        public async Task<IActionResult> Edit(int? id, int? mid)
         {
-            if (id == null)
+            if (id == null && mid == null)
             {
                 return NotFound();
             }
 
-            var posseder = await _context.Posseder.FindAsync(id);
+            var posseder = await _context.Posseder.FindAsync(id, mid);
             if (posseder == null)
             {
                 return NotFound();
@@ -95,9 +95,9 @@ namespace gestion_de_notes.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Coefficient,ClasseId,MatiereId")] Posseder posseder)
+        public async Task<IActionResult> Edit(int id, [FromForm]int mid, [Bind("Coefficient,ClasseId,MatiereId")] Posseder posseder)
         {
-            if (id != posseder.ClasseId)
+            if (id != posseder.ClasseId || mid != posseder.MatiereId)
             {
                 return NotFound();
             }
@@ -111,7 +111,7 @@ namespace gestion_de_notes.Controllers
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!PossederExists(posseder.ClasseId))
+                    if (!PossederExists(posseder.ClasseId, posseder.MatiereId))
                     {
                         return NotFound();
                     }
@@ -128,9 +128,9 @@ namespace gestion_de_notes.Controllers
         }
 
         // GET: Posseders/Delete/5
-        public async Task<IActionResult> Delete(int? id)
+        public async Task<IActionResult> Delete(int? id, int? mid)
         {
-            if (id == null)
+            if (id == null && mid == null)
             {
                 return NotFound();
             }
@@ -138,7 +138,7 @@ namespace gestion_de_notes.Controllers
             var posseder = await _context.Posseder
                 .Include(p => p.Classe)
                 .Include(p => p.Matiere)
-                .FirstOrDefaultAsync(m => m.ClasseId == id);
+                .FirstOrDefaultAsync(m => m.ClasseId == id && m.MatiereId == mid);
             if (posseder == null)
             {
                 return NotFound();
@@ -150,9 +150,9 @@ namespace gestion_de_notes.Controllers
         // POST: Posseders/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(int id)
+        public async Task<IActionResult> DeleteConfirmed(int id, [FromForm]int mid)
         {
-            var posseder = await _context.Posseder.FindAsync(id);
+            var posseder = await _context.Posseder.FindAsync(id, mid);
             if (posseder != null)
             {
                 _context.Posseder.Remove(posseder);
@@ -162,9 +162,9 @@ namespace gestion_de_notes.Controllers
             return RedirectToAction(nameof(Index));
         }
 
-        private bool PossederExists(int id)
+        private bool PossederExists(int id, int mid)
         {
-            return _context.Posseder.Any(e => e.ClasseId == id);
+            return _context.Posseder.Any(e => e.ClasseId == id && e.MatiereId == mid);
         }
     }
 }
