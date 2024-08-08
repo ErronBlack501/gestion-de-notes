@@ -10,22 +10,23 @@ using gestion_de_notes.Models;
 
 namespace gestion_de_notes.Controllers
 {
-    public class ProfesseursController : Controller
+    public class PossedersController : Controller
     {
         private readonly ApplicationDbContext _context;
 
-        public ProfesseursController(ApplicationDbContext context)
+        public PossedersController(ApplicationDbContext context)
         {
             _context = context;
         }
 
-        // GET: Professeurs
+        // GET: Posseders
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Professeur.ToListAsync());
+            var applicationDbContext = _context.Posseder.Include(p => p.Classe).Include(p => p.Matiere);
+            return View(await applicationDbContext.ToListAsync());
         }
 
-        // GET: Professeurs/Details/5
+        // GET: Posseders/Details/5
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -33,40 +34,45 @@ namespace gestion_de_notes.Controllers
                 return NotFound();
             }
 
-            var professeur = await _context.Professeur
-                .FirstOrDefaultAsync(m => m.IdProfesseur == id);
-            if (professeur == null)
+            var posseder = await _context.Posseder
+                .Include(p => p.Classe)
+                .Include(p => p.Matiere)
+                .FirstOrDefaultAsync(m => m.ClasseId == id);
+            if (posseder == null)
             {
                 return NotFound();
             }
 
-            return View(professeur);
+            return View(posseder);
         }
 
-        // GET: Professeurs/Create
+        // GET: Posseders/Create
         public IActionResult Create()
         {
+            ViewData["ClasseId"] = new SelectList(_context.Classe, "IdClasse", "Niveau");
+            ViewData["MatiereId"] = new SelectList(_context.Matiere, "IdMatiere", "NomMatiere");
             return View();
         }
 
-        // POST: Professeurs/Create
+        // POST: Posseders/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("IdProfesseur,Nom,Prenom,NomPrenom,AdresseProf,NumTel")] Professeur professeur)
+        public async Task<IActionResult> Create([Bind("Coefficient,ClasseId,MatiereId")] Posseder posseder)
         {
             if (ModelState.IsValid)
             {
-                professeur.NomPrenom = $"{professeur.Nom} {professeur.Prenom}";
-                _context.Add(professeur);
+                _context.Add(posseder);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            return View(professeur);
+            ViewData["ClasseId"] = new SelectList(_context.Classe, "IdClasse", "Niveau", posseder.ClasseId);
+            ViewData["MatiereId"] = new SelectList(_context.Matiere, "IdMatiere", "NomMatiere", posseder.MatiereId);
+            return View(posseder);
         }
 
-        // GET: Professeurs/Edit/5
+        // GET: Posseders/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -74,22 +80,24 @@ namespace gestion_de_notes.Controllers
                 return NotFound();
             }
 
-            var professeur = await _context.Professeur.FindAsync(id);
-            if (professeur == null)
+            var posseder = await _context.Posseder.FindAsync(id);
+            if (posseder == null)
             {
                 return NotFound();
             }
-            return View(professeur);
+            ViewData["ClasseId"] = new SelectList(_context.Classe, "IdClasse", "Niveau", posseder.ClasseId);
+            ViewData["MatiereId"] = new SelectList(_context.Matiere, "IdMatiere", "NomMatiere", posseder.MatiereId);
+            return View(posseder);
         }
 
-        // POST: Professeurs/Edit/5
+        // POST: Posseders/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("IdProfesseur,Nom,Prenom,NomPrenom,AdresseProf,NumTel")] Professeur professeur)
+        public async Task<IActionResult> Edit(int id, [Bind("Coefficient,ClasseId,MatiereId")] Posseder posseder)
         {
-            if (id != professeur.IdProfesseur)
+            if (id != posseder.ClasseId)
             {
                 return NotFound();
             }
@@ -98,12 +106,12 @@ namespace gestion_de_notes.Controllers
             {
                 try
                 {
-                    _context.Update(professeur);
+                    _context.Update(posseder);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!ProfesseurExists(professeur.IdProfesseur))
+                    if (!PossederExists(posseder.ClasseId))
                     {
                         return NotFound();
                     }
@@ -114,10 +122,12 @@ namespace gestion_de_notes.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            return View(professeur);
+            ViewData["ClasseId"] = new SelectList(_context.Classe, "IdClasse", "Niveau", posseder.ClasseId);
+            ViewData["MatiereId"] = new SelectList(_context.Matiere, "IdMatiere", "NomMatiere", posseder.MatiereId);
+            return View(posseder);
         }
 
-        // GET: Professeurs/Delete/5
+        // GET: Posseders/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -125,34 +135,36 @@ namespace gestion_de_notes.Controllers
                 return NotFound();
             }
 
-            var professeur = await _context.Professeur
-                .FirstOrDefaultAsync(m => m.IdProfesseur == id);
-            if (professeur == null)
+            var posseder = await _context.Posseder
+                .Include(p => p.Classe)
+                .Include(p => p.Matiere)
+                .FirstOrDefaultAsync(m => m.ClasseId == id);
+            if (posseder == null)
             {
                 return NotFound();
             }
 
-            return View(professeur);
+            return View(posseder);
         }
 
-        // POST: Professeurs/Delete/5
+        // POST: Posseders/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var professeur = await _context.Professeur.FindAsync(id);
-            if (professeur != null)
+            var posseder = await _context.Posseder.FindAsync(id);
+            if (posseder != null)
             {
-                _context.Professeur.Remove(professeur);
+                _context.Posseder.Remove(posseder);
             }
 
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
-        private bool ProfesseurExists(int id)
+        private bool PossederExists(int id)
         {
-            return _context.Professeur.Any(e => e.IdProfesseur == id);
+            return _context.Posseder.Any(e => e.ClasseId == id);
         }
     }
 }

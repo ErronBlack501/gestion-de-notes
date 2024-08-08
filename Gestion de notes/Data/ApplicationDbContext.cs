@@ -30,11 +30,7 @@ namespace gestion_de_notes.Data
             modelBuilder.Entity<Professeur>()
               .HasIndex(p => new { p.NumTel, p.NomPrenom })
               .IsUnique();
-            modelBuilder.Entity<Professeur>()
-                .HasOne(p => p.Matiere)
-                .WithMany(m => m.Professeurs)
-                .HasForeignKey(p => p.MatiereId);
-
+            
             //Examen Model:
             modelBuilder.Entity<Examen>()
                 .HasIndex(e => e.Session)
@@ -94,6 +90,18 @@ namespace gestion_de_notes.Data
                .WithMany(ex => ex.Notes)
                .HasForeignKey(n => n.ExamenId);
 
+            //Maitriser Model:
+            modelBuilder.Entity<Maitriser>()
+                .HasKey(m => new { m.ProfesseurId, m.MatiereId });
+            modelBuilder.Entity<Maitriser>()
+                .HasOne(m => m.Professeur)
+                .WithMany(p => p.Maitrisers)
+                .HasForeignKey(m =>  m.ProfesseurId);
+            modelBuilder.Entity<Maitriser>()
+               .HasOne(m => m.Matiere)
+               .WithMany(mat => mat.Maitrisers)
+               .HasForeignKey(m => m.MatiereId);
+
             base.OnModelCreating(modelBuilder);
         }
 
@@ -105,6 +113,9 @@ namespace gestion_de_notes.Data
         public DbSet<gestion_de_notes.Models.Professeur> Professeur { get; set; } = default!;
         public DbSet<gestion_de_notes.Models.Examen> Examen { get; set; } = default!;
         public DbSet<gestion_de_notes.Models.Posseder> Posseder { get; set; } = default!;
+        public DbSet<gestion_de_notes.Models.Enseigner> Enseigner { get; set; } = default!;
+        public DbSet<gestion_de_notes.Models.Note> Note { get; set; } = default!;
+        public DbSet<gestion_de_notes.Models.Maitriser> Maitriser { get; set; } = default!;
        
     }
 }

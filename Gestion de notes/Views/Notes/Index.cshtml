@@ -1,0 +1,59 @@
+﻿@model IEnumerable<gestion_de_notes.Models.Note>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.NoteEleve)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Eleve)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Professeur)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Matiere)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Examen)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.NoteEleve)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Eleve.NomPrenom)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Professeur.NomPrenom)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Matiere.NomMatiere)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Examen.Session)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
+                @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
+                @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

@@ -20,10 +20,10 @@
                 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
                     <ul class="navbar-nav flex-grow-1">
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Accueil</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Confidentialité</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Eleves" asp-action="Index">Elèves</a>
@@ -38,14 +38,23 @@
                             <a class="nav-link text-dark" asp-area="" asp-controller="Matieres" asp-action="Index">Matières</a>
                         </li>
                         <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Posseders" asp-action="Index">Coefficients</a>
+                        </li>
+                        <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Professeurs" asp-action="Index">Professeurs</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Enseigners" asp-action="Index">Répartitions</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Maitrisers" asp-action="Index">Maîtrises</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Examens" asp-action="Index">Examens</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Posseders" asp-action="Index">Coefficients</a>
-                        </li>
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Notes" asp-action="Index">Notes</a>
+                        </li>             
                     </ul>
                    <partial name="_LoginPartial" />
                 </div>

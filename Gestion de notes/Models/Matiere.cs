@@ -14,6 +14,8 @@ namespace gestion_de_notes.Models
         public List<Professeur> Professeurs { get; set; } = new List<Professeur>();
         public List<Posseder> Posseders { get; set; } = new List<Posseder>();
         public List<Note> Notes { get; set; } = new List<Note>();
+        public List<Maitriser> Maitrisers { get; set; } = new List<Maitriser>();
+
 
         public Matiere()
         {
