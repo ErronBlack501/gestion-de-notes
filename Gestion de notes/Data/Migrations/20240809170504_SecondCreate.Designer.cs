@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using gestion_de_notes.Data;
 
@@ -11,9 +12,11 @@ using gestion_de_notes.Data;
 namespace gestion_de_notes.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240809170504_SecondCreate")]
+    partial class SecondCreate
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -232,9 +235,15 @@ namespace gestion_de_notes.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("IdClasse"));
 
-                    b.Property<string>("Niveau")
+                    b.Property<int>("Groupe")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Niveau")
+                        .HasColumnType("int");
+
+                    b.Property<string>("NiveauGrp")
                         .IsRequired()
-                        .HasColumnType("nvarchar(450)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("IdClasse");
 
@@ -263,9 +272,6 @@ namespace gestion_de_notes.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
-                    b.Property<int>("GroupeId")
-                        .HasColumnType("int");
-
                     b.Property<string>("Nom")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -290,8 +296,6 @@ namespace gestion_de_notes.Migrations
                     b.HasKey("IdEleve");
 
                     b.HasIndex("ClasseId");
-
-                    b.HasIndex("GroupeId");
 
                     b.HasIndex("Email", "NumMatricule", "NomPrenom")
                         .IsUnique();
@@ -338,24 +342,6 @@ namespace gestion_de_notes.Migrations
                         .IsUnique();
 
                     b.ToTable("Examen");
-                });
-
-            modelBuilder.Entity("gestion_de_notes.Models.Groupe", b =>
-                {
-                    b.Property<int>("IdGroupe")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("IdGroupe"));
-
-                    b.Property<string>("Design")
-                        .IsRequired()
-                        .HasMaxLength(1)
-                        .HasColumnType("nvarchar(1)");
-
-                    b.HasKey("IdGroupe");
-
-                    b.ToTable("Groupe");
                 });
 
             modelBuilder.Entity("gestion_de_notes.Models.Maitriser", b =>
@@ -540,15 +526,7 @@ namespace gestion_de_notes.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("gestion_de_notes.Models.Groupe", "Groupe")
-                        .WithMany("Eleves")
-                        .HasForeignKey("GroupeId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.Navigation("Classe");
-
-                    b.Navigation("Groupe");
                 });
 
             modelBuilder.Entity("gestion_de_notes.Models.Enseigner", b =>
@@ -645,11 +623,9 @@ namespace gestion_de_notes.Migrations
 
             modelBuilder.Entity("gestion_de_notes.Models.Professeur", b =>
                 {
-                    b.HasOne("gestion_de_notes.Models.Matiere", "Matiere")
+                    b.HasOne("gestion_de_notes.Models.Matiere", null)
                         .WithMany("Professeurs")
                         .HasForeignKey("MatiereIdMatiere");
-
-                    b.Navigation("Matiere");
                 });
 
             modelBuilder.Entity("gestion_de_notes.Models.Classe", b =>
@@ -669,11 +645,6 @@ namespace gestion_de_notes.Migrations
             modelBuilder.Entity("gestion_de_notes.Models.Examen", b =>
                 {
                     b.Navigation("Notes");
-                });
-
-            modelBuilder.Entity("gestion_de_notes.Models.Groupe", b =>
-                {
-                    b.Navigation("Eleves");
                 });
 
             modelBuilder.Entity("gestion_de_notes.Models.Matiere", b =>

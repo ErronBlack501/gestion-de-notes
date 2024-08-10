@@ -14,17 +14,18 @@ namespace gestion_de_notes.Models
         [Required]
         public string Prenom { get; set; } = null!;
 
+        [Display(Name = "Nom et Prénom")]
         public string NomPrenom { get; set; } = string.Empty; //Unique
 
         [Required]
+        [Display(Name = "Adresse")]
         public string AdresseProf { get; set; } = null!;
 
         [Phone]
+        [Display(Name = "N° Téléphone")]
         [Required]
         public string NumTel { get; set; } = null!; //Unique
-
-        public Matiere? Matiere { get; set; } 
-
+                                                    //
         public List<Enseigner> Enseigners { get; set; } = new List<Enseigner>();
         public List<Note> Notes { get; set; } = new List<Note>();
         public List<Maitriser> Maitrisers { get; set; } = new List<Maitriser>();

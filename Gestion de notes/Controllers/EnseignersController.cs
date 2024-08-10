@@ -72,7 +72,7 @@ namespace gestion_de_notes.Controllers
             return View(enseigner);
         }
 
-        /*// GET: Enseigners/Edit/5
+        //GET: Enseigners/Edit/5
         public async Task<IActionResult> Edit(int? id, int? pid)
         {
             if (id == null && pid == null)
@@ -125,7 +125,7 @@ namespace gestion_de_notes.Controllers
             ViewData["ClasseId"] = new SelectList(_context.Classe, "IdClasse", "Niveau", enseigner.ClasseId);
             ViewData["ProfesseurId"] = new SelectList(_context.Professeur, "IdProfesseur", "NomPrenom", enseigner.ProfesseurId);
             return View(enseigner);
-        }*/
+        }
 
         // GET: Enseigners/Delete/5
         public async Task<IActionResult> Delete(int? id, int? pid)

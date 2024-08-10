@@ -1,4 +1,5 @@
-﻿@model gestion_de_notes.Models.Classe
+﻿@using gestion_de_notes.Models.Enum
+@model gestion_de_notes.Models.Classe
 
 @{
     ViewData["Title"] = "Edit";
@@ -15,8 +16,13 @@
             <input type="hidden" asp-for="IdClasse" />
             <div class="form-group">
                 <label asp-for="Niveau" class="control-label"></label>
-                <input asp-for="Niveau" class="form-control" />
+                <select asp-for="Niveau" class="form-control" asp-items="Html.GetEnumSelectList<NiveauEnum>()"></select>
                 <span asp-validation-for="Niveau" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Groupe" class="control-label"></label>
+                <select asp-for="Groupe" class="form-control" asp-items="Html.GetEnumSelectList<GroupeEnum>()"></select>
+                <span asp-validation-for="Groupe" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <input type="submit" value="Save" class="btn btn-primary" />

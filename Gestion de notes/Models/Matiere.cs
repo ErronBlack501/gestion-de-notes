@@ -9,6 +9,7 @@ namespace gestion_de_notes.Models
         public int IdMatiere { get; set; }
 
         [Required]
+        [Display(Name = "Nom de la matière")]
         public string NomMatiere { get; set; } = null!; //unique
 
         public List<Professeur> Professeurs { get; set; } = new List<Professeur>();

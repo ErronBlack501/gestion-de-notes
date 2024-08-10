@@ -12,8 +12,8 @@ using gestion_de_notes.Data;
 namespace gestion_de_notes.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20240808115207_firstCreate")]
-    partial class firstCreate
+    [Migration("20240810063414_rollback")]
+    partial class rollback
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -235,13 +235,19 @@ namespace gestion_de_notes.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("IdClasse"));
 
-                    b.Property<string>("Niveau")
+                    b.Property<int>("Groupe")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Niveau")
+                        .HasColumnType("int");
+
+                    b.Property<string>("NiveauGrp")
                         .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
                     b.HasKey("IdClasse");
 
-                    b.HasIndex("Niveau")
+                    b.HasIndex("NiveauGrp")
                         .IsUnique();
 
                     b.ToTable("Classe");
@@ -265,9 +271,6 @@ namespace gestion_de_notes.Migrations
                     b.Property<string>("Email")
                         .IsRequired()
                         .HasColumnType("nvarchar(450)");
-
-                    b.Property<int>("GroupeId")
-                        .HasColumnType("int");
 
                     b.Property<string>("Nom")
                         .IsRequired()
@@ -294,8 +297,6 @@ namespace gestion_de_notes.Migrations
 
                     b.HasIndex("ClasseId");
 
-                    b.HasIndex("GroupeId");
-
                     b.HasIndex("Email", "NumMatricule", "NomPrenom")
                         .IsUnique();
 
@@ -304,18 +305,13 @@ namespace gestion_de_notes.Migrations
 
             modelBuilder.Entity("gestion_de_notes.Models.Enseigner", b =>
                 {
-                    b.Property<int>("IdEnseigner")
-                        .HasColumnType("int");
-
                     b.Property<int>("ClasseId")
                         .HasColumnType("int");
 
                     b.Property<int>("ProfesseurId")
                         .HasColumnType("int");
 
-                    b.HasKey("IdEnseigner", "ClasseId", "ProfesseurId");
-
-                    b.HasIndex("ClasseId");
+                    b.HasKey("ClasseId", "ProfesseurId");
 
                     b.HasIndex("ProfesseurId");
 
@@ -348,40 +344,17 @@ namespace gestion_de_notes.Migrations
                     b.ToTable("Examen");
                 });
 
-            modelBuilder.Entity("gestion_de_notes.Models.Groupe", b =>
-                {
-                    b.Property<int>("IdGroupe")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("IdGroupe"));
-
-                    b.Property<string>("Design")
-                        .IsRequired()
-                        .HasMaxLength(1)
-                        .HasColumnType("nvarchar(1)");
-
-                    b.HasKey("IdGroupe");
-
-                    b.ToTable("Groupe");
-                });
-
             modelBuilder.Entity("gestion_de_notes.Models.Maitriser", b =>
                 {
-                    b.Property<int>("IdMaitriser")
-                        .HasColumnType("int");
-
                     b.Property<int>("ProfesseurId")
                         .HasColumnType("int");
 
                     b.Property<int>("MatiereId")
                         .HasColumnType("int");
 
-                    b.HasKey("IdMaitriser", "ProfesseurId", "MatiereId");
+                    b.HasKey("ProfesseurId", "MatiereId");
 
                     b.HasIndex("MatiereId");
-
-                    b.HasIndex("ProfesseurId");
 
                     b.ToTable("Maitriser");
                 });
@@ -408,16 +381,13 @@ namespace gestion_de_notes.Migrations
 
             modelBuilder.Entity("gestion_de_notes.Models.Note", b =>
                 {
-                    b.Property<int>("IdNote")
+                    b.Property<int>("EleveId")
                         .HasColumnType("int");
 
                     b.Property<int>("ProfesseurId")
                         .HasColumnType("int");
 
                     b.Property<int>("MatiereId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("EleveId")
                         .HasColumnType("int");
 
                     b.Property<int>("ExamenId")
@@ -427,9 +397,7 @@ namespace gestion_de_notes.Migrations
                         .HasPrecision(3)
                         .HasColumnType("float(3)");
 
-                    b.HasKey("IdNote", "ProfesseurId", "MatiereId", "EleveId", "ExamenId");
-
-                    b.HasIndex("EleveId");
+                    b.HasKey("EleveId", "ProfesseurId", "MatiereId", "ExamenId");
 
                     b.HasIndex("ExamenId");
 
@@ -442,9 +410,6 @@ namespace gestion_de_notes.Migrations
 
             modelBuilder.Entity("gestion_de_notes.Models.Posseder", b =>
                 {
-                    b.Property<int>("IdPosseder")
-                        .HasColumnType("int");
-
                     b.Property<int>("ClasseId")
                         .HasColumnType("int");
 
@@ -454,9 +419,7 @@ namespace gestion_de_notes.Migrations
                     b.Property<int>("Coefficient")
                         .HasColumnType("int");
 
-                    b.HasKey("IdPosseder", "ClasseId", "MatiereId");
-
-                    b.HasIndex("ClasseId");
+                    b.HasKey("ClasseId", "MatiereId");
 
                     b.HasIndex("MatiereId");
 
@@ -563,15 +526,7 @@ namespace gestion_de_notes.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("gestion_de_notes.Models.Groupe", "Groupe")
-                        .WithMany("Eleves")
-                        .HasForeignKey("GroupeId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.Navigation("Classe");
-
-                    b.Navigation("Groupe");
                 });
 
             modelBuilder.Entity("gestion_de_notes.Models.Enseigner", b =>
@@ -668,11 +623,9 @@ namespace gestion_de_notes.Migrations
 
             modelBuilder.Entity("gestion_de_notes.Models.Professeur", b =>
                 {
-                    b.HasOne("gestion_de_notes.Models.Matiere", "Matiere")
+                    b.HasOne("gestion_de_notes.Models.Matiere", null)
                         .WithMany("Professeurs")
                         .HasForeignKey("MatiereIdMatiere");
-
-                    b.Navigation("Matiere");
                 });
 
             modelBuilder.Entity("gestion_de_notes.Models.Classe", b =>
@@ -692,11 +645,6 @@ namespace gestion_de_notes.Migrations
             modelBuilder.Entity("gestion_de_notes.Models.Examen", b =>
                 {
                     b.Navigation("Notes");
-                });
-
-            modelBuilder.Entity("gestion_de_notes.Models.Groupe", b =>
-                {
-                    b.Navigation("Eleves");
                 });
 
             modelBuilder.Entity("gestion_de_notes.Models.Matiere", b =>

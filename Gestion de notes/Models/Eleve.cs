@@ -15,16 +15,20 @@ namespace gestion_de_notes.Models
         [Required]
         public string Prenom { get; set; } = null!;
 
+        [Display(Name = "Nom et Prénom")]
         public string NomPrenom { get; set; } = string.Empty; //unique
 
         [StringLength(4)]
+        [Display(Name = "N° Matricule")]
         [Required]
         public string NumMatricule { get; set; } = null!; //unique
 
         [Required]
+        [Display(Name = "Adresse")]
         public string AdresseEleve { get; set; } = null!;
 
         [Phone]
+        [Display(Name = "Contact des Parents")]
         [Required]
         public string ParentNumTel { get; set; } = null!;
 
@@ -36,12 +40,6 @@ namespace gestion_de_notes.Models
         [Required]
         public int ClasseId { get; set; }
         public Classe? Classe { get; set; } 
-
-        [ForeignKey("GroupeId")]
-        [Required]
-        public int GroupeId { get; set; }
-        
-        public Groupe? Groupe { get; set; } 
 
         public List<Note> Notes { get; set; } = new List<Note>();
 

@@ -9,11 +9,13 @@ namespace gestion_de_notes.Models
         [Required]
         [Precision(3)]
         [Range(0, 20.00)]
+        [Display(Name = "Note de l'élève")]
         public double NoteEleve { get; set; }
 
         [Required]
         [ForeignKey("EleveId")]
         public int EleveId { get; set; }
+        [Display(Name = "Elève")]
         public Eleve? Eleve { get; set; } 
         
         [Required]
@@ -24,6 +26,7 @@ namespace gestion_de_notes.Models
         [Required]
         [ForeignKey("MatiereId")]
         public int MatiereId { get; set; }
+        [Display(Name = "Matière")]
         public Matiere? Matiere { get; set; }
 
         [Required]

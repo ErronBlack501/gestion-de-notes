@@ -13,16 +13,15 @@
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.Niveau)
+                @Html.DisplayNameFor(model => model.NiveauGrp)
             </th>
-            <th></th>
         </tr>
     </thead>
     <tbody>
 @foreach (var item in Model) {
         <tr>
             <td>
-                @Html.DisplayFor(modelItem => item.Niveau)
+                @Html.DisplayFor(modelItem => item.NiveauGrp)
             </td>
             <td>
                 <a asp-action="Edit" asp-route-id="@item.IdClasse">Edit</a> |

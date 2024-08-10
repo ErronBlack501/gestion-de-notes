@@ -22,7 +22,7 @@ namespace gestion_de_notes.Controllers
         // GET: Eleves
         public async Task<IActionResult> Index()
         {
-            var applicationDbContext = _context.Eleve.Include(e => e.Classe).Include(e => e.Groupe);
+            var applicationDbContext = _context.Eleve.Include(e => e.Classe);
             return View(await applicationDbContext.ToListAsync());
         }
 
@@ -36,7 +36,6 @@ namespace gestion_de_notes.Controllers
 
             var eleve = await _context.Eleve
                 .Include(e => e.Classe)
-                .Include(e => e.Groupe)
                 .FirstOrDefaultAsync(m => m.IdEleve == id);
             if (eleve == null)
             {
@@ -49,8 +48,7 @@ namespace gestion_de_notes.Controllers
         // GET: Eleves/Create
         public IActionResult Create()
         {
-            ViewData["ClasseId"] = new SelectList(_context.Classe, "IdClasse", "Niveau");
-            ViewData["GroupeId"] = new SelectList(_context.Groupe, "IdGroupe", "Design");
+            ViewData["ClasseId"] = new SelectList(_context.Classe, "IdClasse", "NiveauGrp");
             return View();
         }
 
@@ -59,26 +57,16 @@ namespace gestion_de_notes.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("IdEleve,Nom,Prenom,NomPrenom,NumMatricule,AdresseEleve,ParentNumTel,Email,ClasseId,GroupeId")] Eleve eleve)
+        public async Task<IActionResult> Create([Bind("IdEleve,Nom,Prenom,NomPrenom,NumMatricule,AdresseEleve,ParentNumTel,Email,ClasseId")] Eleve eleve)
         {
-            eleve.NomPrenom = $"{eleve.Nom} {eleve.Prenom}";
-   
             if (ModelState.IsValid)
             {
+                eleve.NomPrenom = $"{eleve.Nom} {eleve.Prenom}";
                 _context.Add(eleve);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            else
-            {
-                var errors = ModelState.Values.SelectMany(v => v.Errors);
-                foreach(var error in errors)
-                {
-                    Console.WriteLine(error.ErrorMessage);
-                }
-            }
-            ViewData["ClasseId"] = new SelectList(_context.Classe, "IdClasse", "Niveau", eleve.ClasseId);
-            ViewData["GroupeId"] = new SelectList(_context.Groupe, "IdGroupe", "Design", eleve.GroupeId);
+            ViewData["ClasseId"] = new SelectList(_context.Classe, "IdClasse", "NiveauGrp", eleve.ClasseId);
             return View(eleve);
         }
 
@@ -95,8 +83,7 @@ namespace gestion_de_notes.Controllers
             {
                 return NotFound();
             }
-            ViewData["ClasseId"] = new SelectList(_context.Classe, "IdClasse", "Niveau", eleve.ClasseId);
-            ViewData["GroupeId"] = new SelectList(_context.Groupe, "IdGroupe", "Design", eleve.GroupeId);
+            ViewData["ClasseId"] = new SelectList(_context.Classe, "IdClasse", "NiveauGrp", eleve.ClasseId);
             return View(eleve);
         }
 
@@ -105,7 +92,7 @@ namespace gestion_de_notes.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("IdEleve,Nom,Prenom,NomPrenom,NumMatricule,AdresseEleve,ParentNumTel,Email,ClasseId,GroupeId")] Eleve eleve)
+        public async Task<IActionResult> Edit(int id, [Bind("IdEleve,Nom,Prenom,NomPrenom,NumMatricule,AdresseEleve,ParentNumTel,Email,ClasseId")] Eleve eleve)
         {
             if (id != eleve.IdEleve)
             {
@@ -133,8 +120,7 @@ namespace gestion_de_notes.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["ClasseId"] = new SelectList(_context.Classe, "IdClasse", "Niveau", eleve.ClasseId);
-            ViewData["GroupeId"] = new SelectList(_context.Groupe, "IdGroupe", "Design", eleve.GroupeId);
+            ViewData["ClasseId"] = new SelectList(_context.Classe, "IdClasse", "NiveauGrp", eleve.ClasseId);
             return View(eleve);
         }
 
@@ -148,7 +134,6 @@ namespace gestion_de_notes.Controllers
 
             var eleve = await _context.Eleve
                 .Include(e => e.Classe)
-                .Include(e => e.Groupe)
                 .FirstOrDefaultAsync(m => m.IdEleve == id);
             if (eleve == null)
             {

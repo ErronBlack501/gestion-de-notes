@@ -21,16 +21,13 @@ namespace gestion_de_notes.Data
                 .HasOne(e => e.Classe)
                 .WithMany(c => c.Eleves)
                 .HasForeignKey(e => e.ClasseId);
-            modelBuilder.Entity<Eleve>()
-               .HasOne(e => e.Groupe)
-               .WithMany(g => g.Eleves)
-               .HasForeignKey(e => e.GroupeId);
+          
 
             //Professeur Model:
             modelBuilder.Entity<Professeur>()
               .HasIndex(p => new { p.NumTel, p.NomPrenom })
               .IsUnique();
-            
+       
             //Examen Model:
             modelBuilder.Entity<Examen>()
                 .HasIndex(e => e.Session)
@@ -43,7 +40,7 @@ namespace gestion_de_notes.Data
 
             //Classe Model:
             modelBuilder.Entity<Classe>()
-                .HasIndex(c => c.Niveau)
+                .HasIndex(c => c.NiveauGrp)
                 .IsUnique();
 
             //Posseder Model:
@@ -106,7 +103,6 @@ namespace gestion_de_notes.Data
         }
 
 
-        public DbSet<gestion_de_notes.Models.Groupe> Groupe { get; set; } = default!;
         public DbSet<gestion_de_notes.Models.Classe> Classe { get; set; } = default!;
         public DbSet<gestion_de_notes.Models.Eleve> Eleve { get; set; } = default!;
         public DbSet<gestion_de_notes.Models.Matiere> Matiere { get; set; } = default!;
@@ -115,7 +111,6 @@ namespace gestion_de_notes.Data
         public DbSet<gestion_de_notes.Models.Posseder> Posseder { get; set; } = default!;
         public DbSet<gestion_de_notes.Models.Enseigner> Enseigner { get; set; } = default!;
         public DbSet<gestion_de_notes.Models.Note> Note { get; set; } = default!;
-        public DbSet<gestion_de_notes.Models.Maitriser> Maitriser { get; set; } = default!;
-       
+        public DbSet<gestion_de_notes.Models.Maitriser> Maitriser { get; set; } = default!;     
     }
 }

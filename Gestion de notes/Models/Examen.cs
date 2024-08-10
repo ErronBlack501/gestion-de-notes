@@ -11,10 +11,12 @@ namespace gestion_de_notes.Models
         public string Session { get; set; } = null!; //Unique
 
         [DataType(DataType.Date)]
+        [Display(Name = "Début session")]
         [Required]
         public DateTime DebutSession { get; set; }
 
         [DataType(DataType.Date)]
+        [Display(Name = "Fin session")]
         [Required]
         public DateTime FinSesssion { get; set; }
 

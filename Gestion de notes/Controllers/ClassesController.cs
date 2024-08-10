@@ -54,14 +54,16 @@ namespace gestion_de_notes.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("IdClasse,Niveau")] Classe classe)
+        public async Task<IActionResult> Create([Bind("IdClasse,Niveau,Groupe,NiveauGrp,ProfesseurId")] Classe classe)
         {
             if (ModelState.IsValid)
             {
+                classe.NiveauGrp = $"{classe.Niveau}-{classe.Groupe}";
                 _context.Add(classe);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
+           
             return View(classe);
         }
 
@@ -86,7 +88,7 @@ namespace gestion_de_notes.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("IdClasse,Niveau")] Classe classe)
+        public async Task<IActionResult> Edit(int id, [Bind("IdClasse,Niveau,Groupe,NiveauGrp,ProfesseurId")] Classe classe)
         {
             if (id != classe.IdClasse)
             {
@@ -97,6 +99,7 @@ namespace gestion_de_notes.Controllers
             {
                 try
                 {
+                    classe.NiveauGrp = $"{classe.Niveau}-{classe.Groupe}";
                     _context.Update(classe);
                     await _context.SaveChangesAsync();
                 }
@@ -113,6 +116,7 @@ namespace gestion_de_notes.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
+           
             return View(classe);
         }
 
